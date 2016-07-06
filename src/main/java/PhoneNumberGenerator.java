@@ -10,10 +10,7 @@ public class PhoneNumberGenerator {
     private final static ArrayList<Character> illegalChars
         = new ArrayList<Character>(Arrays.asList('(', ')', '*', '^', '#', '-', '_', '+'));
     private final static Random randomGenerator = new Random();
-    private final static int numOfPhones = 1000000;
-    private final static int phoneNumLength = 10;
-    private final static int secondBreak = 2;
-    private final static int thirdBreak = 5;
+    private final static int numOfPhones = 100;
 
     public PhoneNumberGenerator() {
     }
@@ -28,6 +25,10 @@ public class PhoneNumberGenerator {
         return randomGenerator.nextInt(10);
     }
 
+    private static boolean randomBoolean() {
+        return randomGenerator.nextBoolean();
+    }
+
     private static char randomIllegalChar() {
         return illegalChars.get(randomGenerator.nextInt(illegalChars.size()));
     }
@@ -35,9 +36,10 @@ public class PhoneNumberGenerator {
     private static String constructPhoneNum() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(randomIllegalChar());
-        for (int i = 0; i < phoneNumLength; i++) {
-            stringBuilder.append(randomDigit());
-            if (i == secondBreak || i == thirdBreak) {
+        for (int i = 0; i < 13; i++) {
+            if (randomDigit() > 3) {
+                stringBuilder.append(randomDigit());
+            } else {
                 stringBuilder.append(randomIllegalChar());
             }
         }
